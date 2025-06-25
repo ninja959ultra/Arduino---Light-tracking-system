@@ -34,4 +34,71 @@ This setup mimics how a device can follow the direction of the strongest light s
 
 
 # Pictures:
-![img1]()
+![img1](Arduino_project_light_tracking_system_PART1.jpeg)
+![img2](Arduino_project_light_tracking_system_PART2.jpeg)
+![img3](Arduino_project_light_tracking_system_PART3.jpeg)
+
+
+
+# Code below:
+```cpp
+#include <Servo.h>
+
+Servo servo;
+
+
+byte blueLED = 5;
+byte whiteLED = 8;
+int leftLDR = A0;
+int rightLDR = A5;
+
+// Servo angle
+byte angle = 0;
+
+
+int leftLDRValue;
+int rightLDRValue;
+
+
+void setup() {
+  servo.attach(2);
+  pinMode(blueLED, OUTPUT);
+  pinMode(whiteLED, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop() {
+  leftLDRValue = analogRead(leftLDR);
+  rightLDRValue = analogRead(rightLDR);
+
+  if (rightLDRValue > leftLDRValue) {
+    digitalWrite(blueLED, HIGH);
+    digitalWrite(whiteLED, LOW);
+
+    if(angle < 180)
+    angle += 15;
+    servo.write(angle);
+  }
+
+  if (rightLDRValue < leftLDRValue) {
+    digitalWrite(blueLED, LOW);
+    digitalWrite(whiteLED, HIGH);
+
+    if (angle > 0){
+      angle -= 15;
+      servo.write(angle);
+    }
+      
+  }
+
+
+  Serial.print("Right= ");
+  Serial.println(rightLDRValue);
+  Serial.print("Left= ");
+  Serial.println(leftLDRValue);
+
+  delay(100);
+
+}
+'''
