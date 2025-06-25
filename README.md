@@ -62,9 +62,11 @@ int rightLDRValue;
 
 void setup() {
   servo.attach(2);
+  servo.write(0);
   pinMode(blueLED, OUTPUT);
   pinMode(whiteLED, OUTPUT);
   Serial.begin(9600);
+  delay(1000);
 }
 
 
@@ -101,4 +103,5 @@ void loop() {
   delay(100);
 
 }
+
 ```
